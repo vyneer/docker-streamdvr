@@ -5,13 +5,14 @@ ARG HEALTHCHECKS_ID
 
 ENV STREAMDVR_VERSION=0.14 \
     YOUTUBEDL_VERSION=2021.06.06 \
-    STREAMLINK_VERSION=2.3.0
+    STREAMLINK_VERSION=2.3.0 \
+    HOME="/app/.home"
 
 RUN \
  echo "**** install dependencies ****" && \
  apk add --no-cache \
 	curl \
-	nodejs \
+	nodejs-current \
 	npm \
 	python3 \ 
 	py3-pip \
@@ -23,11 +24,10 @@ RUN \
 	libgomp \
 	ffmpeg && \
  echo "**** install packages ****" && \
- 	pip3 install --upgrade pip && \
  	pip3 install youtube-dl==${YOUTUBEDL_VERSION} streamlink==${STREAMLINK_VERSION} && \
 	git clone https://github.com/back-to/generic.git /tmp/generic && \
-  mkdir -p /root/.config/streamlink/ && \
-  mv /tmp/generic/plugins /root/.config/streamlink/ && \
+  mkdir -p /app/.home/.local/share/streamlink/ && \
+  mv /tmp/generic/plugins /app/.home/.local/share/streamlink/ && \
  echo "**** install streamdvr ****" && \
   wget -qO- https://github.com/jrudess/streamdvr/archive/v${STREAMDVR_VERSION}.tar.gz | tar -xvz -C /tmp && \
   mv /tmp/streamdvr-${STREAMDVR_VERSION}/* /app/ && cd /app && \ 
