@@ -16,6 +16,7 @@ RUN \
 	nodejs-current \
 	npm \
 	python3 \ 
+	python3-dev \
 	py3-pip \
 	py3-setuptools \
 	ca-certificates \
@@ -23,6 +24,8 @@ RUN \
 	git \
 	build-base \
 	libgomp \
+	libxslt-dev \
+	libxml2-dev \
 	ffmpeg && \
  echo "**** install packages ****" && \
  	pip3 install youtube-dl==${YOUTUBEDL_VERSION} streamlink==${STREAMLINK_VERSION} yt-dlp==${YT_DLP_VERSION} && \
