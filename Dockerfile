@@ -5,7 +5,8 @@ ARG HEALTHCHECKS_ID
 
 ENV STREAMDVR_VERSION=0.14 \
     YOUTUBEDL_VERSION=2021.06.06 \
-    STREAMLINK_VERSION=2.3.0 \
+    STREAMLINK_VERSION=2.4.0 \
+    YT_DLP_VERSION=2021.09.02 \
     HOME="/app/.home"
 
 RUN \
@@ -24,7 +25,7 @@ RUN \
 	libgomp \
 	ffmpeg && \
  echo "**** install packages ****" && \
- 	pip3 install youtube-dl==${YOUTUBEDL_VERSION} streamlink==${STREAMLINK_VERSION} && \
+ 	pip3 install youtube-dl==${YOUTUBEDL_VERSION} streamlink==${STREAMLINK_VERSION} yt-dlp==${YT_DLP_VERSION} && \
 	git clone https://github.com/back-to/generic.git /tmp/generic && \
   mkdir -p /app/.home/.local/share/streamlink/ && \
   mv /tmp/generic/plugins /app/.home/.local/share/streamlink/ && \
