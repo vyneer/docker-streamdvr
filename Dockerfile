@@ -42,6 +42,11 @@ RUN \
 	npm ci --only=production
 
 RUN \
+ echo "**** install the w3-upload script ****" && \
+  	git clone https://github.com/vyneer/w3-upload /app/w3-upload && \
+  	cd /app/w3-upload && npm ci --only=production
+
+RUN \
  echo "**** cleaning up ****" && \
 	npm cache clean --force && \
   	apk del git build-base && \
