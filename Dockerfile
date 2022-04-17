@@ -1,12 +1,11 @@
-FROM lsiobase/alpine:3.14
+FROM lsiobase/alpine:3.15
 LABEL org.opencontainers.image.description "Docker image of jrudess' StreamDVR app."
 
 ARG HEALTHCHECKS_ID
 
-ENV STREAMDVR_VERSION=0.14 \
-    YOUTUBEDL_VERSION=2021.06.06 \
-    STREAMLINK_VERSION=2.4.0 \
-    YT_DLP_VERSION=2021.09.02 \
+ENV YOUTUBEDL_VERSION=2021.12.17 \
+    STREAMLINK_VERSION=3.2.0 \
+    YT_DLP_VERSION=2022.04.08 \
     HOME="/app/.home"
 
 RUN \
@@ -26,26 +25,38 @@ RUN \
 	libgomp \
 	libxslt-dev \
 	libxml2-dev \
-	ffmpeg && \
+	dos2unix \
+	ffmpeg
+
+RUN \
  echo "**** install packages ****" && \
  	pip3 install youtube-dl==${YOUTUBEDL_VERSION} streamlink==${STREAMLINK_VERSION} yt-dlp==${YT_DLP_VERSION} && \
 	git clone https://github.com/back-to/generic.git /tmp/generic && \
-  mkdir -p /app/.home/.local/share/streamlink/ && \
-  mv /tmp/generic/plugins /app/.home/.local/share/streamlink/ && \
+  	mkdir -p /app/.home/.local/share/streamlink/ && \
+  	mv /tmp/generic/plugins /app/.home/.local/share/streamlink/
+
+RUN \
  echo "**** install streamdvr ****" && \
-  wget -qO- https://github.com/jrudess/streamdvr/archive/v${STREAMDVR_VERSION}.tar.gz | tar -xvz -C /tmp && \
-  mv /tmp/streamdvr-${STREAMDVR_VERSION}/* /app/ && cd /app && \ 
-	npm ci --only=production && \
+  	git clone https://github.com/vyneer/streamdvr /tmp/streamdvr && \
+  	mv /tmp/streamdvr/* /app/ && cd /app && \ 
+	npm ci --only=production
+
+RUN \
  echo "**** cleaning up ****" && \
 	npm cache clean --force && \
-  apk del git build-base && \
-  rm -rf /tmp/*
+  	apk del git build-base && \
+  	rm -rf /tmp/*
 
 COPY /root /
 
+RUN echo "**** converting crlf to lf just in case ****" && \ 
+	dos2unix /etc/cont-init.d/30-base-config && \
+	dos2unix /etc/services.d/streamdvr/run && \
+	apk del dos2unix
+
 WORKDIR /app
 
-VOLUME /app/config /app/capturing /app/captured
+VOLUME /app/config /app/scripts/custom /app/capturing /app/captured
 
 HEALTHCHECK --interval=300s --timeout=15s --start-period=10s \
             CMD curl -L https://hc-ping.com/${HEALTHCHECKS_ID}

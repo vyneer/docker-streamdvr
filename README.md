@@ -3,10 +3,11 @@ Docker image of jrudess' [StreamDVR](https://github.com/jrudess/streamdvr) app.
 ### Usage
 ```
 docker run --name=streamdvr \
+-v /path/to/scripts:/app/scripts/custom \
 -v /path/to/config:/app/config \
 -v /path/to/capturing:/app/capturing \
 -v /path/to/captured:/app/captured \
-ghcr.io/purrsevere/streamdvr:latest
+ghcr.io/vyneer/streamdvr:latest
 ```
 
 ### Docker Compose
@@ -15,9 +16,10 @@ version: "3"
 services:
   streamdvr:
     container_name: streamdvr
-    image: ghcr.io/purrsevere/streamdvr:latest
+    image: ghcr.io/vyneer/streamdvr:latest
     restart: on-failure
     volumes:
+      - /path/to/scripts:/app/scripts/custom
       - /path/to/config:/app/config
       - /path/to/capturing:/app/capturing
       - /path/to/captured:/app/captured
@@ -32,6 +34,7 @@ services:
 * If you want your changes to persist, include a copy of the config folder and bind mount it to the app at /app/config. 
 
 ### Changelog:
+* **April 18th, 2022** Package updates: Alpine 3.15, youtube-dl 2021.12.17, yt-dlp 2022.04.08, streamdvr (my fork, at least for now) gets pulled directly from GitHub. Add the ability to add custom scripts.
 * **August 2nd, 2021** Package updates: StreamDVR v0.14, Alpine 3.14, youtube-dl 2021.06.06 & streamlink 2.3.0
 * **May 3rd, 2021:** Rebase image to LinuxServer.io's Alpine image for customizable permissions.
 * **November 24, 2020:** Upgrade packages: Alpine 3.12, youtube-dl 2020.11.24, streamlink 1.7.0. Added healthcheck via [healthchecks.io](https://healthchecks.io/).
