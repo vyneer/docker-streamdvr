@@ -7,6 +7,7 @@ docker run --name=streamdvr \
 -v /path/to/config:/app/config \
 -v /path/to/capturing:/app/capturing \
 -v /path/to/captured:/app/captured \
+-v /path/to/ipfs-db.db:/app/ipfs-db.db \
 ghcr.io/vyneer/streamdvr:latest
 ```
 
@@ -23,6 +24,7 @@ services:
       - /path/to/config:/app/config
       - /path/to/capturing:/app/capturing
       - /path/to/captured:/app/captured
+      - /path/to/ipfs-db.db:/app/ipfs-db.db
     environment:
       - PUID=1000
       - PGID=1000
