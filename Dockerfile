@@ -26,7 +26,8 @@ RUN \
 	libxslt-dev \
 	libxml2-dev \
 	dos2unix \
-	ffmpeg
+	ffmpeg \
+	jq
 
 RUN \
  echo "**** install packages ****" && \
