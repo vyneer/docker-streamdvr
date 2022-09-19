@@ -1,11 +1,11 @@
-FROM lsiobase/alpine:3.15
+FROM lsiobase/alpine:3.16
 LABEL org.opencontainers.image.description "Docker image of jrudess' StreamDVR app."
 
 ARG HEALTHCHECKS_ID
 
 ENV YOUTUBEDL_VERSION=2021.12.17 \
-    STREAMLINK_VERSION=3.2.0 \
-    YT_DLP_VERSION=2022.04.08 \
+    STREAMLINK_VERSION=5.0.0 \
+    YT_DLP_VERSION=2022.09.01 \
     HOME="/app/.home"
 
 RUN \

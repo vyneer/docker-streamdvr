@@ -36,6 +36,7 @@ services:
 * If you want your changes to persist, include a copy of the config folder and bind mount it to the app at /app/config. 
 
 ### Changelog:
+* **September 19th, 2022** Package updates: Alpine 3.16, yt-dlp 2022.09.01, streamlink 5.0.0.
 * **April 18th, 2022** Package updates: Alpine 3.15, youtube-dl 2021.12.17, yt-dlp 2022.04.08, streamdvr (my fork, at least for now) gets pulled directly from GitHub. Add the ability to add custom scripts. Add the w3-upload script.
 * **August 2nd, 2021** Package updates: StreamDVR v0.14, Alpine 3.14, youtube-dl 2021.06.06 & streamlink 2.3.0
 * **May 3rd, 2021:** Rebase image to LinuxServer.io's Alpine image for customizable permissions.
